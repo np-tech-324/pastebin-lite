@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import "./page.css";
 
 export default function Home() {
   const [content, setContent] = useState("");
@@ -35,51 +36,55 @@ export default function Home() {
       setContent("");
       setTtl("");
       setMaxViews("");
-    } catch (err) {
+    } catch {
       setError("Failed to create paste");
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4">
-      <h1 className="text-2xl font-bold mb-4">Pastebin Lite</h1>
-      <textarea
-        className="w-full p-2 border rounded mb-2"
-        rows={6}
-        placeholder="Enter your text..."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="TTL in seconds (optional)"
-        className="w-full p-2 border rounded mb-2"
-        value={ttl}
-        onChange={(e) => setTtl(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Max views (optional)"
-        className="w-full p-2 border rounded mb-2"
-        value={maxViews}
-        onChange={(e) => setMaxViews(e.target.value)}
-      />
-      <button
-        onClick={createPaste}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Create Paste
-      </button>
+    <div className="page">
+      <div className="card">
+        <h1 className="title">Pastebin Lite</h1>
 
-      {pasteUrl && (
-        <p className="mt-4">
-          ✅ Paste created:{" "}
-          <a href={pasteUrl} target="_blank" className="text-blue-600 underline">
-            {pasteUrl}
-          </a>
-        </p>
-      )}
-      {error && <p className="mt-4 text-red-500">{error}</p>}
+        <textarea
+          className="textarea"
+          rows={6}
+          placeholder="Enter your text..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+
+        <input
+          type="number"
+          placeholder="TTL in seconds (optional)"
+          className="input"
+          value={ttl}
+          onChange={(e) => setTtl(e.target.value)}
+        />
+
+        <input
+          type="number"
+          placeholder="Max views (optional)"
+          className="input"
+          value={maxViews}
+          onChange={(e) => setMaxViews(e.target.value)}
+        />
+
+        <button className="button" onClick={createPaste}>
+          Create Paste
+        </button>
+
+        {pasteUrl && (
+          <div className="success">
+            ✅ Paste created:
+            <a href={pasteUrl} target="_blank">
+              {pasteUrl}
+            </a>
+          </div>
+        )}
+
+        {error && <div className="error">{error}</div>}
+      </div>
     </div>
   );
 }

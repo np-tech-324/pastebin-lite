@@ -1,40 +1,27 @@
-import { notFound } from "next/navigation";
+import PasteViewer from "./PasteViewer";
+import "./page.css";
 
-async function getPaste(id: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-  const res = await fetch(`${baseUrl}/api/pastes/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) return null;
-  return res.json();
+interface PageProps {
+  params: Promise<{ id: string }>;
 }
 
-export default async function PastePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const paste = await getPaste(id);
+export default async function PastePage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
-  if (!paste) notFound();
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-3xl mx-auto bg-white p-6 rounded shadow">
-        <h1 className="text-xl font-bold mb-4">Paste</h1>
-
-        <pre className="bg-gray-50 p-4 rounded border whitespace-pre-wrap">
-          {paste.content}
-        </pre>
-
-        <p className="text-sm text-gray-500 mt-4">
-          Views: {paste.views}
-        </p>
+  if (!id) {
+    return (
+      <div className="page error-page">
+        <div className="card">
+          <h1 className="title error-title">Error</h1>
+          <p className="text">Invalid paste ID</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <PasteViewer id={id} />;
 }

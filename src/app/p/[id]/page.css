@@ -1,0 +1,36 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.card {
+  width: 100%;
+  max-width: 720px;
+  background: #090909;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.text {
+  font-size: 15px;
+  color: #374151;
+}
+
+.error-page {
+  background: linear-gradient(135deg, #fee2e2, #fef2f2);
+}
+
+.error-title {
+  color: #b91c1c;
+}
